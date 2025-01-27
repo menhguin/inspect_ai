@@ -257,11 +257,19 @@ def goodfire() -> type[ModelAPI]:
 
     # in the clear
     from .goodfire import GoodfireAPI
-<<<<<<< HEAD
-=======
 
->>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
     return GoodfireAPI
+
+
+@modelapi("deepseek")
+def deepseek() -> type[ModelAPI]:
+    """Get the DeepSeek API provider."""
+    # Validate OpenAI client version (DeepSeek uses OpenAI-compatible API)
+    validate_openai_client("DeepSeek API")
+
+    # Import and return the DeepSeekAPI class
+    from .deepseek import DeepSeekAPI
+    return DeepSeekAPI
 
 
 def validate_openai_client(feature: str) -> None:
