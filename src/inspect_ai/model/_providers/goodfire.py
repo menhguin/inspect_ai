@@ -1,13 +1,25 @@
 import os
+<<<<<<< HEAD
 from typing import Any, List, Literal, cast, get_args
 
 from goodfire import AsyncClient
 from goodfire.api.chat.client import AsyncChatAPICompletions
+=======
+from typing import Any, List, Literal, get_args
+
+from goodfire import AsyncClient
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
 from goodfire.api.chat.interfaces import ChatMessage as GoodfireChatMessage
 from goodfire.api.exceptions import InvalidRequestException, RateLimitException
 from goodfire.variants.variants import SUPPORTED_MODELS, Variant
 from typing_extensions import override
 
+<<<<<<< HEAD
+=======
+from inspect_ai.tool._tool_choice import ToolChoice
+from inspect_ai.tool._tool_info import ToolInfo
+
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
 from .._chat_message import (
     ChatMessage,
     ChatMessageAssistant,
@@ -32,6 +44,10 @@ DEFAULT_MAX_TOKENS = 4096
 DEFAULT_TEMPERATURE = 1.0  # Standard sampling temperature (baseline)
 DEFAULT_TOP_P = 1.0  # No nucleus sampling truncation (baseline)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
 class GoodfireAPI(ModelAPI):
     """Goodfire API provider.
 
@@ -50,6 +66,10 @@ class GoodfireAPI(ModelAPI):
     - Limited role support (system/user/assistant only)
     - Tool messages converted to user messages
     """
+<<<<<<< HEAD
+=======
+
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
     client: AsyncClient
     variant: Variant
     model_args: dict[str, Any]
@@ -88,7 +108,13 @@ class GoodfireAPI(ModelAPI):
         # Validate model name against supported models
         supported_models = list(get_args(SUPPORTED_MODELS))
         if self.model_name not in supported_models:
+<<<<<<< HEAD
             raise ValueError(f"Model {self.model_name} not supported. Supported models: {supported_models}")
+=======
+            raise ValueError(
+                f"Model {self.model_name} not supported. Supported models: {supported_models}"
+            )
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
 
         # Initialize client with minimal configuration
         base_url_val = model_base_url(base_url, "GOODFIRE_BASE_URL")
@@ -133,10 +159,14 @@ class GoodfireAPI(ModelAPI):
         if isinstance(message, ChatMessageTool):
             content = f"Tool {message.function}: {content}"
 
+<<<<<<< HEAD
         return cast(GoodfireChatMessage, {
             "role": role,
             "content": content,
         })
+=======
+        return GoodfireChatMessage(role=role, content=content)
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
 
     def handle_error(self, ex: Exception) -> ModelOutput | Exception:
         """Handle only errors that need special treatment for retry logic or model limits."""
@@ -185,7 +215,13 @@ class GoodfireAPI(ModelAPI):
         params: dict[str, Any] = {
             "model": self.variant.base_model,  # Use base_model instead of stringifying the Variant
             "messages": messages,
+<<<<<<< HEAD
             "max_completion_tokens": int(config.max_tokens) if config.max_tokens else DEFAULT_MAX_TOKENS,
+=======
+            "max_completion_tokens": int(config.max_tokens)
+            if config.max_tokens
+            else DEFAULT_MAX_TOKENS,
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
             "stream": False,
         }
 
@@ -201,16 +237,29 @@ class GoodfireAPI(ModelAPI):
             params["top_p"] = DEFAULT_TOP_P
 
         # Add any additional model args (highest priority)
+<<<<<<< HEAD
         api_params = {k: v for k, v in self.model_args.items() if k not in ["api_key", "base_url", "model_args"]}
+=======
+        api_params = {
+            k: v
+            for k, v in self.model_args.items()
+            if k not in ["api_key", "base_url", "model_args"]
+        }
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
         params.update(api_params)
 
         try:
             # Use native async client
+<<<<<<< HEAD
             response = await cast(AsyncChatAPICompletions, self.client.chat.completions).create(**params)
+=======
+            response = await self.client.chat.completions.create(**params)
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
             response_dict = response.model_dump()
 
             output = ModelOutput(
                 model=self.model_name,
+<<<<<<< HEAD
                 choices=[ChatCompletionChoice(
                     message=ChatMessageAssistant(
                         content=response_dict["choices"][0]["message"]["content"]
@@ -223,12 +272,31 @@ class GoodfireAPI(ModelAPI):
                 request=params,
                 response=response_dict
             )
+=======
+                choices=[
+                    ChatCompletionChoice(
+                        message=ChatMessageAssistant(
+                            content=response_dict["choices"][0]["message"]["content"]
+                        ),
+                        stop_reason="stop",
+                    )
+                ],
+                usage=ModelUsage(**response_dict["usage"])
+                if "usage" in response_dict
+                else None,
+            )
+            model_call = ModelCall.create(request=params, response=response_dict)
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
             return (output, model_call)
         except Exception as ex:
             result = self.handle_error(ex)
             model_call = ModelCall.create(
                 request=params,
+<<<<<<< HEAD
                 response={}  # Empty response for error case
+=======
+                response={},  # Empty response for error case
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
             )
             return (result, model_call)
 

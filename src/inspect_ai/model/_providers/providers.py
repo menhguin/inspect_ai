@@ -257,6 +257,10 @@ def goodfire() -> type[ModelAPI]:
 
     # in the clear
     from .goodfire import GoodfireAPI
+<<<<<<< HEAD
+=======
+
+>>>>>>> 894d343a1fb2c84624808f8650452060c331aa7b
     return GoodfireAPI
 
 

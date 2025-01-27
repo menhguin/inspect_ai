@@ -3,10 +3,14 @@
 ## Unreleased
 
 - [Agent Bridge](https://inspect.ai-safety-institute.org.uk/agent-bridge.html) for integrating external agent frameworks with Inspect.
+- [Goodfire](https://www.goodfire.ai/) model provider.
 - Add `@wraps` to functions wrapped by Inspect decorators to preserve type information.
 - Hugging Face: Add support for stop sequences for HF models.
 - Docker: More robust parsing of version strings (handle development versions).
 - Vertex: Support for Anthropic models hosted on Vertex.
+- OpenAI: Read `refusal` field from assistant message when provided.
+- Anthropic: Don't insert '(no content)' into cannonical messages list (do only on replay)
+- Scoring: Always provide half-again the sample time limit for scoring.
 - Bugfix: Fix issue w/ approvals for samples with id==0.
 - Bugfix: Use "plain" display when running eval_async() outside of eval().
 
