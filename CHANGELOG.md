@@ -2,17 +2,28 @@
 
 ## Unreleased
 
+- Computer: Enable viewing computer tool's remote mouse cursor via VNC.
+- Computer: Disable lock screen on from computer tool reference image.
+- Bugfix: Remove `suffix` from `eval-set` CLI args.
+
+## v0.3.60 (29 January 2025)
+
 - [Agent Bridge](https://inspect.ai-safety-institute.org.uk/agent-bridge.html) for integrating external agent frameworks with Inspect.
-- [Goodfire](https://www.goodfire.ai/) model provider.
+- [Goodfire](https://inspect.ai-safety-institute.org.uk/models.html#goodfire) model provider.
 - Add `@wraps` to functions wrapped by Inspect decorators to preserve type information.
 - Hugging Face: Add support for stop sequences for HF models.
 - Docker: More robust parsing of version strings (handle development versions).
 - Vertex: Support for Anthropic models hosted on Vertex.
 - OpenAI: Read `refusal` field from assistant message when provided.
+- OpenAI: Use qualifiers rather than model args for OpenAI on other providers (`openai/azure`)
 - Anthropic: Don't insert '(no content)' into cannonical messages list (do only on replay)
+- Anthropic: Use qualifiers rather than model args for Anthropic on other providers (`anthropic/bedrock`, `anthropic/vertex`).
+- Anthropic: Suport for `extra_body` model arg (for adding additional JSON properties to the request)
+- Basic Agent: Append `tools` to `state` so that tools added in `init` are preserved.
 - Scoring: Always provide half-again the sample time limit for scoring.
 - Bugfix: Fix issue w/ approvals for samples with id==0.
 - Bugfix: Use "plain" display when running eval_async() outside of eval().
+- Bugfix: Fix issue with multiple scorers of the same type in a task.
 
 ## v0.3.59 (24 January 2025)
 
@@ -217,7 +228,7 @@
 
 ## v0.3.45 (11 November 2024)
 
-- [time_limit](https://inspect.ai-safety-institute.org.uk/errors_and_limits.html#sec-sample-limits) option for specifying a maximum execution time for samples.
+- [time_limit](https://inspect.ai-safety-institute.org.uk/errors_and_limits.html#sample-limits) option for specifying a maximum execution time for samples.
 - [read_eval_log_samples()](https://inspect.ai-safety-institute.org.uk/eval-logs.html#streaming) function for streaming reads of `.eval` log files.
 - Mistral: Support for multi-modal models (requires v1.2 of mistralai package).
 - Groq: Support for multi-modal models (requires v0.11.0 of groq package).
@@ -293,7 +304,7 @@
 - [Approval mode](https://inspect.ai-safety-institute.org.uk/approval.html) for extensible approvals of tool calls (human and auto-approvers built in,  arbitrary other approval schemes via extensions).
 - [Trace mode](https://inspect.ai-safety-institute.org.uk/interactivity.html#sec-trace-mode) for printing model interactions to the terminal.
 - Add `as_dict()` utility method to `Score`
-- [Sample limits](https://inspect.ai-safety-institute.org.uk/errors_and_limits.html#sec-sample-limits) (`token_limit` and `message_limit`) for capping the number of tokens or messages used per sample ( `message_limit` replaces deprecated `max_messages`).
+- [Sample limits](https://inspect.ai-safety-institute.org.uk/errors_and_limits.html#sample-limits) (`token_limit` and `message_limit`) for capping the number of tokens or messages used per sample ( `message_limit` replaces deprecated `max_messages`).
 - Add `metadata` field to `Task` and record in log `EvalSpec`.
 - Include datetime and level in file logger.
 - Correct llama3 and o1 tool calling when empty arguments passed.

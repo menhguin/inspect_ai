@@ -187,6 +187,28 @@ The vast majority of scorers will use `str` (e.g. for correct/incorrect via "C" 
 
 Next, we'll take a look at the source code for a couple of the built in scorers as a jumping off point for implementing your own scorers. If you are working on custom scorers, you should also review the [Scorer Workflow](#sec-scorer-workflow) section below for tips on optimising your development process.
 
+### Models in Scorers
+
+You'll often want to use models in the implementation of scorers. Use the `get_model()` function to get either the currently evaluated model or another model interface. For example:
+
+```python
+# use the model being evaluated for grading
+grader_model = get_model() 
+
+# use another model for grading
+grader_model = get_model("google/gemini-1.5-pro")
+```
+
+Use the `config` parameter of `get_model()` to override default generation options:
+
+```python
+grader_model = get_model(
+    "google/gemini-1.5-pro", 
+    config = GenerateConfig(temperature = 0.9, max_connections = 10)
+)
+```
+
+
 ### Example: Includes
 
 Here is the source code for the built-in `includes()` scorer:
@@ -539,7 +561,7 @@ def var() -> Metric:
 
 Note that the `Score` class contains a `Value` that is a union over several scalar and collection types. As a convenience, `Score` includes a set of accessor methods to treat the value as a simpler form (e.g. above we use the `score.as_float()` accessor).
 
-## Reducing Epochs {#sec-reducing-epochs}
+## Reducing Epochs {#reducing-epochs}
 
 If a task is run over more than one `epoch`, multiple scores will be generated for each sample. These scores are then *reduced* to a single score representing the score for the sample across all the epochs. 
 

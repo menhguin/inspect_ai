@@ -27,7 +27,11 @@ from inspect_ai._util.constants import (
 from inspect_ai._util.datetime import iso_now
 from inspect_ai._util.error import exception_message
 from inspect_ai._util.hooks import send_telemetry
-from inspect_ai._util.registry import is_registry_object, registry_log_name
+from inspect_ai._util.registry import (
+    is_registry_object,
+    registry_log_name,
+    registry_unqualified_name,
+)
 from inspect_ai._util.timeouts import Timeout, timeout
 from inspect_ai._view.notify import view_notify_eval
 from inspect_ai.dataset import Dataset, Sample
@@ -398,7 +402,13 @@ async def task_run(options: TaskRunOptions) -> EvalLog:
         view_notify_eval(logger.location)
 
         try:
-            await send_telemetry("eval_log", eval_log_json_str(eval_log))
+            if (
+                await send_telemetry("eval_log_location", eval_log.location)
+                == "not_handled"
+            ):
+                # Converting the eval log to JSON is expensive. Only do so if
+                # eval_log_location was not handled.
+                await send_telemetry("eval_log", eval_log_json_str(eval_log))
         except Exception as ex:
             py_logger.warning(
                 f"Error occurred sending telemetry: {exception_message(ex)}"
@@ -685,6 +695,7 @@ async def task_run_sample(
                                         sample_score = SampleScore(
                                             score=score_result,
                                             sample_id=sample.id,
+                                            scorer=registry_unqualified_name(scorer),
                                         )
                                         transcript()._event(
                                             ScoreEvent(
