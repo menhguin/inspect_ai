@@ -83,6 +83,9 @@ class ChatMessageAssistant(ChatMessageBase):
     tool_calls: list[ToolCall] | None = Field(default=None)
     """Tool calls made by the model."""
 
+    reasoning_content: str | None = Field(default=None)
+    """Chain of thought content from reasoning models."""
+
 
 class ChatMessageTool(ChatMessageBase):
     role: Literal["tool"] = Field(default="tool")
