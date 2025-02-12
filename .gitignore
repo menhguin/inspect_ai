@@ -180,3 +180,13 @@ node_modules/
 /.luarc.json
 /.Rproj.user
 *.Rproj
+
+# Project specific
+change-merges-*
+changes-merge*
+changes-test.txt
+Comparing*.pdf
+*.ipynb
+test*.py
+inspect_evals/
+.ruff_cache/
