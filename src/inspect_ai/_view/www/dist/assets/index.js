@@ -22512,8 +22512,10 @@ var require_assets = __commonJS({
       const scoreRendered = (sample2, scoreLabel) => {
         const descriptor = scoreDescriptor(scoreLabel);
         const score22 = scoreValue2(sample2, scoreLabel);
-        if (score22 === null || score22 === "undefined") {
+        if (score22 === null) {
           return "null";
+        } else if (score22 === void 0) {
+          return "";
         } else if (score22 && descriptor && descriptor.render) {
           return descriptor.render(score22);
         } else {
@@ -50618,7 +50620,7 @@ self.onmessage = function (e) {
         EventPanel,
         {
           id,
-          title: "Info",
+          title: "Info" + (event.source ? ": " + event.source : ""),
           className: className2,
           subTitle: formatDateTime(new Date(event.timestamp)),
           icon: ApplicationIcons.info,
@@ -51022,7 +51024,7 @@ self.onmessage = function (e) {
         EventPanel,
         {
           id,
-          title: "Score",
+          title: (event.intermediate ? "Intermediate " : "") + "Score",
           className: clsx(className2, "text-size-small"),
           subTitle: formatDateTime(new Date(event.timestamp)),
           icon: ApplicationIcons.scorer,
