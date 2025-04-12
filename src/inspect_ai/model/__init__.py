@@ -4,6 +4,7 @@ from inspect_ai._util.content import (
     Content,
     ContentAudio,
     ContentImage,
+    ContentReasoning,
     ContentText,
     ContentVideo,
 )
@@ -17,7 +18,7 @@ from ._cache import (
     cache_prune,
     cache_size,
 )
-from ._call_tools import call_tools
+from ._call_tools import ExecuteToolsResult, call_tools, execute_tools
 from ._chat_message import (
     ChatMessage,
     ChatMessageAssistant,
@@ -26,13 +27,15 @@ from ._chat_message import (
     ChatMessageTool,
     ChatMessageUser,
 )
-from ._generate_config import GenerateConfig, GenerateConfigArgs
+from ._conversation import ModelConversation
+from ._generate_config import GenerateConfig, GenerateConfigArgs, ResponseSchema
 from ._model import (
     Model,
     ModelAPI,
     ModelName,
     get_model,
 )
+from ._model_call import ModelCall
 from ._model_output import (
     ChatCompletionChoice,
     Logprob,
@@ -48,9 +51,11 @@ from ._registry import modelapi
 __all__ = [
     "GenerateConfig",
     "GenerateConfigArgs",
+    "ResponseSchema",
     "CachePolicy",
     "ContentAudio",
     "ContentImage",
+    "ContentReasoning",
     "ContentText",
     "ContentVideo",
     "Content",
@@ -61,7 +66,9 @@ __all__ = [
     "ChatMessageAssistant",
     "ChatMessageTool",
     "ChatCompletionChoice",
+    "ModelCall",
     "ModelOutput",
+    "ModelConversation",
     "Logprobs",
     "Logprob",
     "TopLogprob",
@@ -71,6 +78,8 @@ __all__ = [
     "ModelUsage",
     "StopReason",
     "call_tools",
+    "execute_tools",
+    "ExecuteToolsResult",
     "cache_clear",
     "cache_list_expired",
     "cache_path",

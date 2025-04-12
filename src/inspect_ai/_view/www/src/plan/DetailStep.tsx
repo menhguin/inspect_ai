@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import { MetaDataView } from "../metadata/MetaDataView";
-import styles from "./DatasetDetailView.module.css";
+import { FC } from "react";
+import { MetaDataGrid } from "../metadata/MetaDataGrid";
+import styles from "./DetailStep.module.css";
 
 interface DetailStepProps {
   icon?: string;
@@ -9,7 +10,7 @@ interface DetailStepProps {
   className?: string | string[];
 }
 
-export const DetailStep: React.FC<DetailStepProps> = ({
+export const DetailStep: FC<DetailStepProps> = ({
   icon,
   name,
   params,
@@ -21,7 +22,10 @@ export const DetailStep: React.FC<DetailStepProps> = ({
       {iconHtml} {name}
       <div className={styles.container}>
         {params ? (
-          <MetaDataView entries={params} className={"text-size-small"} />
+          <MetaDataGrid
+            entries={params}
+            className={clsx("text-size-small", styles.metadata)}
+          />
         ) : (
           ""
         )}

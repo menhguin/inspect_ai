@@ -31,6 +31,11 @@
   --inspect-font-size-base: 0.9rem;
   --inspect-font-size-small: 0.8rem;
   --inspect-font-size-smaller: 0.8rem;
+  --inspect-font-size-smallest: 0.7rem;
+
+  /* Inspect Glass */
+  --inspect-glass-color: #000000;
+  --inspect-glass-opacity: 0.3;
 }
 
 body:not([class^="vscode-"]) button {
@@ -65,15 +70,15 @@ body[class^="vscode-"] .app-main-grid {
 
 /* Inspect Text Styles */
 .text-style-label {
-  text-transform: uppercase;
+  text-transform: uppercase !important;
 }
 
 .text-style-secondary {
-  color: var(--bs-secondary);
+  color: var(--bs-secondary) !important;
 }
 
 .text-style-tertiary {
-  color: var(--bs-tertiary-color);
+  color: var(--bs-tertiary-color) !important;
 }
 
 /* Inspect Font Size Styles */
@@ -107,6 +112,10 @@ body[class^="vscode-"] .app-main-grid {
 
 .text-size-smaller {
   font-size: var(--inspect-font-size-smaller);
+}
+
+.text-size-smallest {
+  font-size: var(--inspect-font-size-smallest);
 }
 
 .text-truncate {
@@ -154,6 +163,8 @@ body[class^="vscode-"] {
   --inspect-input-border: var(--vscode-input-border);
   --inspect-diff-add-color: var(--vscode-diffEditor-insertedTextBackground);
   --inspect-diff-remove-color: var(--vscode-diffEditor-removedTextBackground);
+  --inspect-glass-color: var(--vscode-editor-foreground);
+  --inspect-glass-opacity: 0.15;
 }
 
 html.vscode {
@@ -335,7 +346,7 @@ body {
   padding-top: 0;
   padding-bottom: 0;
   background-color: var(--bs-light);
-  top: 2px;
+  top: 0;
 }
 
 .navbar-title-grid {
@@ -805,15 +816,21 @@ table.table.table-sm td {
   overflow: unset;
 }
 
+.markdown-content pre[class*="language-"],
 pre[class*="language-"].tool-output,
 .tool-output {
   background-color: #f8f8f8;
 }
+
+.vscode-dark .model-call pre[class*="language-"],
+.vscode-dark .markdown-content pre[class*="language-"],
 .vscode-dark pre[class*="language-"].tool-output,
 .vscode-dark .tool-output {
   background-color: #333333;
 }
 
+.model-call pre[class*="language-"],
+.markdown-content pre[class*="language-"],
 pre[class*="language-"].tool-output {
   border: none !important;
   box-shadow: none !important;
